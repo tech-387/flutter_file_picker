@@ -22,6 +22,8 @@
 @property (nonatomic) NSArray<NSString *> * allowedExtensions;
 @property (nonatomic) BOOL loadDataToMemory;
 @property (nonatomic) BOOL allowCompression;
+@property (nonatomic) BOOL allowOnlyImageCompression;
+
 @property (nonatomic) dispatch_group_t group;
 @property (nonatomic) BOOL isSaveFile;
 @end
@@ -114,6 +116,8 @@
     BOOL isMultiplePick = ((NSNumber*)[arguments valueForKey:@"allowMultipleSelection"]).boolValue;
     
     self.allowCompression = ((NSNumber*)[arguments valueForKey:@"allowCompression"]).boolValue;
+    self.allowOnlyImageCompression = ((NSNumber*)[arguments valueForKey:@"allowOnlyImageCompression"]).boolValue;
+
     self.loadDataToMemory = ((NSNumber*)[arguments valueForKey:@"withData"]).boolValue;
     
     if([call.method isEqualToString:@"any"] || [call.method containsString:@"custom"]) {
@@ -134,7 +138,7 @@
         }
     } else if([call.method isEqualToString:@"video"] || [call.method isEqualToString:@"image"] || [call.method isEqualToString:@"media"]) {
 #ifdef PICKER_MEDIA
-        [self resolvePickMedia:[FileUtils resolveMediaType:call.method] withMultiPick:isMultiplePick withCompressionAllowed:self.allowCompression];
+        [self resolvePickMedia:[FileUtils resolveMediaType:call.method] withMultiPick:isMultiplePick withCompressionAllowed:self.allowCompression withImageCompressionAllowed:self.allowOnlyImageCompression];
 #else
         _result([FlutterError errorWithCode:@"Unsupported picker type"
                                     message:@"Support for the Media picker is not compiled in. Remove the Pod::PICKER_MEDIA=false statement from your Podfile."
@@ -228,13 +232,13 @@
 #endif // PICKER_DOCUMENT
 
 #ifdef PICKER_MEDIA
-- (void) resolvePickMedia:(MediaType)type withMultiPick:(BOOL)multiPick withCompressionAllowed:(BOOL)allowCompression  {
+- (void) resolvePickMedia:(MediaType)type withMultiPick:(BOOL)multiPick withCompressionAllowed:(BOOL)allowCompression withImageCompressionAllowed:(BOOL)allowOnlyImageCompression  {
     
 #ifdef PHPicker
     if (@available(iOS 14, *)) {
         PHPickerConfiguration *config = [[PHPickerConfiguration alloc] init];
         config.filter = type == IMAGE ? [PHPickerFilter imagesFilter] : type == VIDEO ? [PHPickerFilter videosFilter] : [PHPickerFilter anyFilterMatchingSubfilters:@[[PHPickerFilter videosFilter], [PHPickerFilter imagesFilter]]];
-        config.preferredAssetRepresentationMode = self.allowCompression ? PHPickerConfigurationAssetRepresentationModeCompatible : PHPickerConfigurationAssetRepresentationModeCurrent;
+        config.preferredAssetRepresentationMode = self.allowCompression || self.allowOnlyImageCompression ? PHPickerConfigurationAssetRepresentationModeCompatible : PHPickerConfigurationAssetRepresentationModeCurrent;
         
         if(multiPick) {
             config.selectionLimit = 0;
@@ -249,7 +253,7 @@
 #endif
     
     if(multiPick) {
-        [self resolveMultiPickFromGallery:type withCompressionAllowed:allowCompression];
+        [self resolveMultiPickFromGallery:type withCompressionAllowed:allowCompression withImageCompressionAllowed:allowOnlyImageCompression];
         return;
     }
     
@@ -264,7 +268,7 @@
     switch (type) {
         case IMAGE:
             self.galleryPickerController.mediaTypes = imageTypes;
-            self.galleryPickerController.imageExportPreset = allowCompression ? UIImagePickerControllerImageURLExportPresetCompatible : UIImagePickerControllerImageURLExportPresetCurrent;
+            self.galleryPickerController.imageExportPreset = (allowCompression || allowOnlyImageCompression) ? UIImagePickerControllerImageURLExportPresetCompatible : UIImagePickerControllerImageURLExportPresetCurrent;
             break;
             
         case VIDEO:
@@ -282,7 +286,7 @@
     
 }
 
-- (void) resolveMultiPickFromGallery:(MediaType)type withCompressionAllowed:(BOOL)allowCompression {
+- (void) resolveMultiPickFromGallery:(MediaType)type withCompressionAllowed:(BOOL)allowCompression  withImageCompressionAllowed:(BOOL)allowOnlyImageCompression {
     DKImagePickerController * dkImagePickerController = [[DKImagePickerController alloc] init];
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
@@ -302,7 +306,7 @@
     }
     
     DKImageAssetExporterConfiguration * exportConfiguration = [[DKImageAssetExporterConfiguration alloc] init];
-    exportConfiguration.imageExportPreset = allowCompression ? DKImageExportPresentCompatible : DKImageExportPresentCurrent;
+    exportConfiguration.imageExportPreset = (allowCompression || allowOnlyImageCompression) ? DKImageExportPresentCompatible : DKImageExportPresentCurrent;
     exportConfiguration.videoExportPreset = allowCompression ? AVAssetExportPresetHighestQuality : AVAssetExportPresetPassthrough;
     dkImagePickerController.exporter = [dkImagePickerController.exporter initWithConfiguration:exportConfiguration];
     
@@ -541,7 +545,7 @@ didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls{
             NSURL * cachedUrl;
             
             // Check for live photos
-            if(self.allowCompression && [extension isEqualToString:@"pvt"]) {
+            if((self.allowCompression || self.allowOnlyImageCompression) && [extension isEqualToString:@"pvt"]) {
                 NSArray * files = [fileManager contentsOfDirectoryAtURL:url includingPropertiesForKeys:@[] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
                 
                 for (NSURL * item in files) {

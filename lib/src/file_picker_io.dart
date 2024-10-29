@@ -37,11 +37,13 @@ class FilePickerIO extends FilePicker {
     bool? withReadStream = false,
     bool lockParentWindow = false,
     bool readSequential = false,
+    bool? allowOnlyImageCompression = false,
   }) =>
       _getPath(
         type,
         allowMultiple,
         allowCompression,
+        allowOnlyImageCompression,
         allowedExtensions,
         onFileLoading,
         withData,
@@ -74,6 +76,7 @@ class FilePickerIO extends FilePicker {
     FileType fileType,
     bool allowMultipleSelection,
     bool? allowCompression,
+    bool? allowOnlyImageCompression,
     List<String>? allowedExtensions,
     Function(FilePickerStatus)? onFileLoading,
     bool? withData,
@@ -106,6 +109,7 @@ class FilePickerIO extends FilePicker {
         'allowCompression': allowCompression,
         'withData': withData,
         'compressionQuality': compressionQuality,
+        'allowOnlyImageCompression': allowOnlyImageCompression,
       });
 
       if (result == null) {

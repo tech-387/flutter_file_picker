@@ -41,6 +41,8 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
         compressionQuality: 30,
         type: _pickingType,
         allowMultiple: _multiPick,
+        allowCompression: true,
+        allowOnlyImageCompression: true,
         onFileLoading: (FilePickerStatus status) => print(status),
         allowedExtensions: (_extension?.isNotEmpty ?? false)
             ? _extension?.replaceAll(' ', '').split(',')
