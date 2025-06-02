@@ -1,3 +1,45 @@
+## 10.1.9
+### Android
+- Fixed an issue when a folder is selected on an external storage [#1801](https://github.com/miguelpruivo/flutter_file_picker/issues/1801)
+
+## 10.1.8
+### Android
+- Fixed an issue when a folder is selected [#1802](https://github.com/miguelpruivo/flutter_file_picker/issues/1802)
+
+## 10.1.7
+### Web
+- Fixed a memory leak on the web.
+
+## 10.1.6
+### Android
+- Fixed an issue when you try to select more than one file[#1796](https://github.com/miguelpruivo/flutter_file_picker/issues/1796)
+- Fixed the app not filter correctly for the selected file types [#1792](https://github.com/miguelpruivo/flutter_file_picker/issues/1792)
+
+## 10.1.5
+### iOS
+- Fixed an app crash when calling `.saveFile` twice and cancelling the native save operation via the UI [#1626](https://github.com/miguelpruivo/flutter_file_picker/issues/1626) [@Leapward-Koex](https://github.com/Leapward-Koex)
+- Fixed a `.saveFile` future never completing when `.saveFile` is called twice without waiting for the first completion. [@Leapward-Koex](https://github.com/Leapward-Koex)
+
+## 10.1.4
+### Android
+- Fixed an issue where paths were loaded with duplicated endings. [#1767](https://github.com/miguelpruivo/flutter_file_picker/pull/1767)
+
+## 10.1.3
+### Android
+- Fixed an issue loading files. [#1777](https://github.com/miguelpruivo/flutter_file_picker/pull/1777)
+
+## 10.1.2
+### Android
+- Improved mimetype detection. [@vicajilau](https://github.com/vicajilau)
+
+## 10.1.1
+### Android
+- Migrated Android code base from Java to Kotlin.
+- Fixed an issue where compressed images were always saved as JPEG files. [#1738](https://github.com/miguelpruivo/flutter_file_picker/pull/1753)[@vicajilau](https://github.com/vicajilau)
+- Fixed an issue where files without extension were not saved properly. [@vicajilau](https://github.com/vicajilau)
+### iOS
+- Fixed an issue where `compressionQuality` on iOS was not loaded properly. [#1761](https://github.com/miguelpruivo/flutter_file_picker/pull/1761)
+
 ## 10.1.0
 ### Desktop (macOS)
 - Introduced a new method, `pickFileAndDirectoryPaths()`, which displays a dialog enabling users to select both files and directories simultaneously. The method returns their absolute paths. Only available for macOS.

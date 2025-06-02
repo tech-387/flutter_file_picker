@@ -87,7 +87,6 @@
         result([FlutterError errorWithCode:@"multiple_request"
                                    message:@"Cancelled by a second request"
                                    details:nil]);
-        _result = nil;
         return;
     }
     
@@ -120,7 +119,7 @@
     
     self.allowOnlyImageCompression = ((NSNumber*)[arguments valueForKey:@"allowOnlyImageCompression"]).boolValue;
 
-    int compressionQuality = [[arguments valueForKey:@"compressionQuality"] intValue];
+    self.compressionQuality = [[arguments valueForKey:@"compressionQuality"] intValue];
     self.allowCompression = self.compressionQuality > 0;
     self.loadDataToMemory = ((NSNumber*)[arguments valueForKey:@"withData"]).boolValue;
     
