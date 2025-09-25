@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package
 import 'package:file/local.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -82,7 +83,9 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
         allowMultiple: _multiPick,
         compressionQuality: 60,
         allowOnlyImageCompression: true,
-        onFileLoading: (FilePickerStatus status) => printInDebug(status),
+        onFileLoading: (FilePickerStatus status) => setState(() {
+          _isLoading = status == FilePickerStatus.picking;
+        }),
         allowedExtensions: (_extension?.isNotEmpty ?? false)
             ? _extension?.replaceAll(' ', '').split(',')
             : null,

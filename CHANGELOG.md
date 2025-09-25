@@ -1,3 +1,50 @@
+## 10.3.3
+### Android
+- Updated compileSdk to use flutter.compileSdkVersion. [#1842](https://github.com/miguelpruivo/flutter_file_picker/issues/1842)
+
+### Linux
+- Fixed an issue where initialDirectory was not working. [#1878](https://github.com/miguelpruivo/flutter_file_picker/issues/1878)
+
+## 10.3.2
+### Linux
+- Fixed an issue filtering files by extension on Linux. [#1870](https://github.com/miguelpruivo/flutter_file_picker/pull/1870) [@Decodetalkers](https://github.com/Decodetalkers)
+
+## 10.3.1
+### General
+- Fixed onFileLoading handler to process status changes only when data is a bool.
+
+## 10.3.0
+### Desktop
+- Support xdg desktop portal filechooser on linux. [#1827](https://github.com/miguelpruivo/flutter_file_picker/issues/1827) [@Decodetalkers](https://github.com/Decodetalkers)
+
+### Android
+- Fixed an issue where CSV files were not properly filtered during file selection. [#1849](https://github.com/miguelpruivo/flutter_file_picker/pull/1849) [@SoftWyer](https://github.com/SoftWyer)
+
+### Web
+- Introduced bool flag to control upload behavior on window blur. [#1833](https://github.com/miguelpruivo/flutter_file_picker/issues/1833) [@mugglmenzel](https://github.com/mugglmenzel)
+
+## 10.2.4
+### Android
+- Fixed an issue where custom MIME types were failing to load picking files on Chromebook. [#1858](https://github.com/miguelpruivo/flutter_file_picker/issues/1858) [@vicajilau](https://github.com/vicajilau)
+
+## 10.2.3
+### General
+- Fixed build failures on Flutter 3.24 caused by changes to address Win32 deprecation warnings on Windows. [#1855](https://github.com/miguelpruivo/flutter_file_picker/issues/1855) [@vicajilau](https://github.com/vicajilau)
+
+## 10.2.2
+### Android
+- Fixed an issue where some files would incorrectly append a `.txt` extension when saving files on Android. [@vicajilau](https://github.com/vicajilau)
+
+## 10.2.1
+### Android
+- Fixed an issue where the image upload would not display the loading indicator.
+
+## 10.2.0
+### Desktop
+- Added support for webp images on Desktop platforms. [#1491](https://github.com/miguelpruivo/flutter_file_picker/issues/1491)
+### Android
+- Fixed an issue where saving files was failing with some MimeTypes [#1789](https://github.com/miguelpruivo/flutter_file_picker/issues/1789), [#1818](https://github.com/miguelpruivo/flutter_file_picker/issues/1818), [#1819](https://github.com/miguelpruivo/flutter_file_picker/issues/1819) and [#1820](https://github.com/miguelpruivo/flutter_file_picker/issues/1820)
+
 ## 10.1.9
 ### Android
 - Fixed an issue when a folder is selected on an external storage [#1801](https://github.com/miguelpruivo/flutter_file_picker/issues/1801)

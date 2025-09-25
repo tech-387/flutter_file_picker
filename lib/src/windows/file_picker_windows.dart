@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:ffi';
 import 'dart:isolate';
 import 'dart:math';
@@ -254,7 +256,7 @@ class FilePickerWindows extends FilePicker {
       case FileType.custom:
         return 'Files (*.${allowedExtensions!.join(',*.')})\x00*.${allowedExtensions.join(';*.')}\x00\x00';
       case FileType.image:
-        return 'Images (*.bmp,*.gif,*.jpeg,*.jpg,*.png)\x00*.bmp;*.gif;*.jpeg;*.jpg;*.png\x00\x00';
+        return 'Images (*.bmp,*.gif,*.jpeg,*.jpg,*.png,*.webp)\x00*.bmp;*.gif;*.jpeg;*.jpg;*.png;*.webp\x00\x00';
       case FileType.media:
         return 'Videos (*.avi,*.flv,*.mkv,*.mov,*.mp4,*.mpeg,*.webm,*.wmv)\x00*.avi;*.flv;*.mkv;*.mov;*.mp4;*.mpeg;*.webm;*.wmv\x00Images (*.bmp,*.gif,*.jpeg,*.jpg,*.png)\x00*.bmp;*.gif;*.jpeg;*.jpg;*.png\x00\x00';
       case FileType.video:
@@ -262,8 +264,8 @@ class FilePickerWindows extends FilePicker {
     }
   }
 
-  validateFileName(String fileName) {
-    if (fileName.contains(RegExp(r'[<>:\/\\|?*"]'))) {
+  void validateFileName(String fileName) {
+    if (fileName.contains(RegExp(r'[<>:/\\|?*"]'))) {
       throw IllegalCharacterInFileNameException(
           'Reserved characters may not be used in file names. See: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions');
     }
