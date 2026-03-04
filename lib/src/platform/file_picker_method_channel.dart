@@ -82,7 +82,6 @@ class MethodChannelFilePicker extends FilePickerPlatform {
   Future<FilePickerResult?> _getPath(
     FileType fileType,
     bool allowMultipleSelection,
-    bool? allowCompression,
     bool? allowOnlyImageCompression,
     List<String>? allowedExtensions,
     Function(FilePickerStatus)? onFileLoading,
