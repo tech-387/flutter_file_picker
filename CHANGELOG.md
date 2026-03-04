@@ -1,3 +1,37 @@
+## 10.3.10
+#### General
+- Reverted breaking changes accidentally introduced in 10.3.9 to maintain Semantic Versioning compliance.
+#### Android
+- Updated Tika library to resolve vulnerability CVE-2025-66516 and CVE-2025-54988 (Critical XXE vulnerability).
+
+## 10.3.9
+#### Android
+- Updated Apache Tika to 3.2.3 to address CVE-2025-66516 and CVE-2025-54988 (Critical XXE vulnerability).
+- Support Gradle 9
+
+## 10.3.8
+### iOS
+- Rename FileUtils to FilePickerUtils [#1921](https://github.com/miguelpruivo/flutter_file_picker/issues/1921)
+### Android
+- Restores the ms[df] URI handling logic in FileUtils.kt to fix file selection returning null on some devices.
+
+## 10.3.7
+### Android
+- Fixed an issue where file type filtering was not being applied correctly, now only displaying files that match the selected MIME types. [#1906](https://github.com/miguelpruivo/flutter_file_picker/pull/1906)
+
+## 10.3.6
+### Android
+- Added support for 16 KB page sizes. [#1888](https://github.com/miguelpruivo/flutter_file_picker/issues/1888)
+
+## 10.3.5
+### iOS
+- Fixed an error when loading large files (>= 2GB~).
+
+## 10.3.4
+### Android
+- Detect HEIC and HEIF extensions as valid image
+- Use compression format based file extension when compressing images.
+
 ## 10.3.3
 ### Android
 - Updated compileSdk to use flutter.compileSdkVersion. [#1842](https://github.com/miguelpruivo/flutter_file_picker/issues/1842)
